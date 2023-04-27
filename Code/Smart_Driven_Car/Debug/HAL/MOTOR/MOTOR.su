@@ -1,0 +1,7 @@
+../HAL/MOTOR/MOTOR.c:10:13:wait_ms	24	static
+../HAL/MOTOR/MOTOR.c:17:6:HAL_MOTORS_Init	16	static
+../HAL/MOTOR/MOTOR.c:42:6:STOP	8	static
+../HAL/MOTOR/MOTOR.c:51:6:forword	8	static
+../HAL/MOTOR/MOTOR.c:62:6:BACK	8	static
+../HAL/MOTOR/MOTOR.c:72:6:RIGHT	8	static
+../HAL/MOTOR/MOTOR.c:83:6:LEFT	8	static

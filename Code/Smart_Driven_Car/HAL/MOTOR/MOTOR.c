@@ -1,0 +1,93 @@
+/*
+ * MOTOR.c
+ *
+ *  Created on: Apr 26, 2023
+ *      Author: Ahmed Adel Wafdy
+ */
+
+#include "MOTOR.h"
+
+static void wait_ms(uint32_t time){
+	uint32_t i,j;
+	for(i=0;i<time;i++)
+		for(j=0;j<255;j++);
+}
+
+
+void HAL_MOTORS_Init(void){
+
+	GPIO_PIN_CONFIG_T pincfg;
+	pincfg.GPIO_PIN_NUMBER = GPIO_PIN_0;
+	pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+	pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10MHz;
+	MCAL_GPIO_Init(GPIOA, &pincfg);
+
+	pincfg.GPIO_PIN_NUMBER = GPIO_PIN_1;
+	pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+	pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10MHz;
+	MCAL_GPIO_Init(GPIOA, &pincfg);
+
+	pincfg.GPIO_PIN_NUMBER = GPIO_PIN_2;
+	pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+	pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10MHz;
+	MCAL_GPIO_Init(GPIOA, &pincfg);
+
+	pincfg.GPIO_PIN_NUMBER = GPIO_PIN_3;
+	pincfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+	pincfg.GPIO_OUTPUT_SPEED = GPIO_SPEED_10MHz;
+	MCAL_GPIO_Init(GPIOA, &pincfg);
+
+}
+
+void STOP(void){
+
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_2,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+
+}
+
+void forword(void){
+/*N1,N3 ARE  HIGH*/
+
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_2,GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+
+}
+
+
+void BACK(void){
+
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_2,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_SET);
+
+}
+
+
+void RIGHT(void){
+
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_2,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+	 wait_ms(3000);
+							 forword();
+
+
+}
+void LEFT(void){
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_0,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_2,GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+
+	 wait_ms(3000);
+			 forword();
+}
+
+
