@@ -64,8 +64,8 @@ all:
 main-build: Smart_Driven_Car.elf secondary-outputs
 
 # Tool invocations
-Smart_Driven_Car.elf Smart_Driven_Car.map: $(OBJS) $(USER_OBJS) D:\embeded\ Systems\STMdrivers\Smart_Driven_Car\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Smart_Driven_Car.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\embeded Systems\STMdrivers\Smart_Driven_Car\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Smart_Driven_Car.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Smart_Driven_Car.elf Smart_Driven_Car.map: $(OBJS) $(USER_OBJS) D:\embeded\ Systems\Advanced\ Embedded\Mastering\ Embedded\Smart\ Car\ project\ data\Smart_Driven-Car\Code\Smart_Driven_Car\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Smart_Driven_Car.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\embeded Systems\Advanced Embedded\Mastering Embedded\Smart Car project data\Smart_Driven-Car\Code\Smart_Driven_Car\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Smart_Driven_Car.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

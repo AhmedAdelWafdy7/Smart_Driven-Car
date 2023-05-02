@@ -23,6 +23,7 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 #define F_CPU 1000000UL
+	uint8_t data;
 
 void clock_init()
 {
@@ -36,50 +37,49 @@ void wait_ms(uint32_t time){
 	for(i=0;i<time;i++)
 		for(j=0;j<255;j++);
 }
+void USART1_CallBack(void)
+{
 
+	switch(data){
+			 case 'F':
+				forword();
+				break;
+			  case 'B':
+				  BACK();
+				  break;
+			   case 'R':
+				 RIGHT();
+			      break;
+			    case 'L':
+				  LEFT();
+				  break;
+
+			}
+
+}
 
 int main(void)
 {
-	uint8_t data;
 	clock_init();
-	USART_CONFIG_t uartCFG;
-	uartCFG.Baud_Rate = USART_BaudRate_9600;
-	uartCFG.HW_FLW_CTRL = USART_HW_FLW_NONE;
-	uartCFG.IRQ_Enable = USART_IRQ_NONE;
-	uartCFG.Parity = USART_Parity_NONE;
-	uartCFG.Word_Length = USART_WordLength_8BIT;
-	uartCFG.Stop_Bits = USART_StopBits_1B;
-	uartCFG.USART_Mode = USART_Mode_Transmitter_Receiver;
-	MCAL_USART_Init(USART1, &uartCFG);
-	MCAL_UART_GPIO_Set_Pins(USART1);
 	HAL_MOTORS_Init();
-	forword();
+
+
+	USART_Config_t USART1_Config;
+
+	USART1_Config.BaudRate = UART_BaudRate_9600;
+	USART1_Config.HwFlowCtl = UART_HwFlowCtl_NONE;
+	USART1_Config.IRQ_Enable = UART_IRQ_Enable_RXNEIE;
+	USART1_Config.P_IRQ_CallBack = USART1_CallBack;
+	USART1_Config.Parity = UART_Parity_NONE;
+	USART1_Config.Payload_Length = UART_Payload_Length_8B;
+	USART1_Config.StopBits = UART_StopBits_1;
+	USART1_Config.USART_Mode = UART_Mode_TX_RX;
+	MCAL_UART_Init(USART1, &USART1_Config);
+	MCAL_UART_GPIO_Set_Pins(USART1);
+
+
 	while(1){
-		MCAL_USART_Receive(USART1, &data, enable);
-		switch(data){
-				 case 'a':
-					forword();
-					wait_ms(4000);
-					break;
-				  case 'b':
-					  BACK();
-						wait_ms(4000);
-					  break;
-				   case 'c':
-					 RIGHT();
-						wait_ms(4000);
-				          break;
-				    case 'd':
-					  LEFT();
-						wait_ms(4000);
-					  break;
-
-
-				}
-				/* stop actions*/
-				wait_ms(5000);
-				 STOP();
-
+		MCAL_UART_ReceiveData(USART1,& data, USART_disable);
 
 	}
 }
